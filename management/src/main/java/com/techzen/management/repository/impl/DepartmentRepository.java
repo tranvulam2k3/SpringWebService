@@ -11,6 +11,7 @@ import java.util.*;
 @Repository
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentRepository implements IDepartmentRepository {
+
     List<Department> departments = new ArrayList<Department>(
             Arrays.asList(
                     new Department(1, "Quản Lý"),

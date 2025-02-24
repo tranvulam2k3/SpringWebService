@@ -1,14 +1,11 @@
 package com.techzen.management.repository.impl;
 
 import com.techzen.management.dto.EmployeeSearchRequest;
-import com.techzen.management.enums.ErrorCode;
 import com.techzen.management.enums.Gender;
-import com.techzen.management.exception.ApiException;
 import com.techzen.management.model.Employee;
 import com.techzen.management.repository.IEmployeeRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;

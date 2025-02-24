@@ -2,7 +2,6 @@ package com.techzen.management.repository;
 
 import com.techzen.management.dto.EmployeeSearchRequest;
 import com.techzen.management.model.Employee;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;

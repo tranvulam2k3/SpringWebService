@@ -4,18 +4,14 @@ import com.techzen.management.dto.EmployeeSearchRequest;
 import com.techzen.management.exception.ApiException;
 import com.techzen.management.enums.ErrorCode;
 import com.techzen.management.model.Employee;
-import com.techzen.management.enums.Gender;
 import com.techzen.management.service.IEmployeeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController

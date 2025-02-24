@@ -5,7 +5,6 @@ import com.techzen.management.model.Employee;
 import com.techzen.management.repository.IEmployeeRepository;
 import com.techzen.management.service.IEmployeeService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;

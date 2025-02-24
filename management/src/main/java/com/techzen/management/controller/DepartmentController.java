@@ -1,72 +1,54 @@
 package com.techzen.management.controller;
 
 import com.techzen.management.exception.ApiException;
-import com.techzen.management.exception.ErrorCode;
+import com.techzen.management.enums.ErrorCode;
 import com.techzen.management.model.Department;
-import com.techzen.management.model.Employee;
+import com.techzen.management.service.IDepartmentService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/departments")
 public class DepartmentController {
 
-    private final List<Department> departments = new ArrayList<Department>(
-            Arrays.asList(
-                    new Department(1, "Quản Lý"),
-                    new Department(2, "Kế Toán"),
-                    new Department(3, "Sale-Marketing"),
-                    new Department(4, "Sản xuất")
-            )
-    );
+    IDepartmentService departmentService;
 
     @GetMapping
     public ResponseEntity<List<Department>> getDepartments() {
-        return ResponseEntity.ok(departments);
+        return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable int id) {
-        return departments.stream()
-                .filter(d -> d.getDepartmentId() == id)
-                .findFirst()
+        return departmentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST));
     }
 
     @PostMapping
-    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
-        department.setDepartmentId((int) (Math.random() * 1000000));
-        departments.add(department);
-        return ResponseEntity.status(HttpStatus.CREATED).body(department);
+    public ResponseEntity<?> createDepartment(@RequestBody Department department) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.save(department));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable int id, @RequestBody Department department) {
-        return departments.stream()
-                .filter(d -> d.getDepartmentId().equals(id))
-                .findFirst()
-                .map(d -> {
-                    d.setDepartmentName(department.getDepartmentName());
-                    return ResponseEntity.ok(d);
-                })
-                .orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+    @PutMapping("/{departmentId}")
+    public ResponseEntity<Department> updateDepartment(@PathVariable("departmentId") int departmentId, @RequestBody Department department) {
+        departmentService.findById(departmentId).orElseThrow(() -> new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST));
+        department.setDepartmentId(departmentId);
+        return ResponseEntity.ok(departmentService.save(department));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDepartment(@PathVariable int id) {
-        return departments.stream()
-                .filter(d -> d.getDepartmentId().equals(id))
-                .findFirst()
-                .map(d -> {
-                    departments.remove(d);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+    @DeleteMapping("/{departmentId}")
+    public ResponseEntity<?> deleteDepartment(@PathVariable("departmentId") int departmentId) {
+        departmentService.findById(departmentId).orElseThrow(() -> new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST));
+        departmentService.deleteDepartment(departmentId);
+        return ResponseEntity.noContent().build();
     }
 }

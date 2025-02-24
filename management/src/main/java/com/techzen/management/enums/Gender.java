@@ -1,4 +1,4 @@
-package com.techzen.management.dto;
+package com.techzen.management.enums;
 
 public enum Gender {
     MALE,FEMALE,OTHER;

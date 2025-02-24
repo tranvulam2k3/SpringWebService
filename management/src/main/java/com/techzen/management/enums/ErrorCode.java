@@ -1,4 +1,4 @@
-package com.techzen.management.exception;
+package com.techzen.management.enums;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,12 +1,11 @@
-package com.techzen.management.model;
+package com.techzen.management.dto;
 
 import com.techzen.management.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,12 +13,20 @@ import java.util.UUID;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class Employee {
-    UUID id;
+public class EmployeeSearchRequest {
     String name;
-    LocalDate dateOfBirth;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate dobFrom;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate dobTo;
+
     Gender gender;
-    BigDecimal salary;
+
+    String salaryRange;
+
     String phone;
+
     Integer departmentId;
 }

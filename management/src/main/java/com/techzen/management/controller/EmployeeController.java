@@ -42,7 +42,8 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("id") UUID id, @RequestBody Employee employee) {
-        employeeService.findById(id).orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+        employeeService.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
         employee.setId(id);
         return ResponseEntity.ok(employeeService.save(employee));
     }

@@ -22,4 +22,5 @@ public class Employee {
     BigDecimal salary;
     String phone;
     Integer departmentId;
+
 }

@@ -128,7 +128,7 @@ public class PremisesRepository implements IPremisesRepository {
 
         String sql = "INSERT INTO premises (id,name, address, acreage, price, rentalStartDate, PremisesTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = BaseRepository.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, premises.getId()); 
+            preparedStatement.setString(1, premises.getId());
             preparedStatement.setString(2, premises.getName());
             preparedStatement.setString(3, premises.getAddress());
             preparedStatement.setInt(4, premises.getAcreage());
@@ -152,7 +152,8 @@ public class PremisesRepository implements IPremisesRepository {
     @Override
     public void delete(String id) {
         try {
-            PreparedStatement preparedStatement = BaseRepository.getConnection().prepareStatement("delete from premises where id = ?");
+            PreparedStatement preparedStatement = BaseRepository.getConnection()
+                    .prepareStatement("delete from premises where id = ?");
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

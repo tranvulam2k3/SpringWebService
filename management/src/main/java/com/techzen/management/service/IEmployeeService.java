@@ -8,8 +8,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IEmployeeService {
+
     List<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest);
+
     Optional<Employee> findById(UUID id);
+
     Employee save(Employee employee);
+
     void delete(UUID id);
 }

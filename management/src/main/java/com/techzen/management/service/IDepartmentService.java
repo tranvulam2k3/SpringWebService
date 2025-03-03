@@ -13,5 +13,6 @@ public interface IDepartmentService {
 
     Department save(Department department);
 
-    void deleteDepartment(Integer departmentId);
+    void delete(Integer departmentId);
+
 }

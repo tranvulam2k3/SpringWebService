@@ -19,7 +19,7 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public List<Department> getAllDepartments() {
-        return departmentRepository.getAll();
+        return departmentRepository.findAll();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public void deleteDepartment(Integer departmentId) {
-        departmentRepository.deleteDepartment(departmentId);
+    public void delete(Integer departmentId) {
+        departmentRepository.deleteById(departmentId);
     }
 }

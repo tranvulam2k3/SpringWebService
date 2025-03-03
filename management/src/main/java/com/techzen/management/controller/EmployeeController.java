@@ -27,7 +27,6 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findByAttribute(employeeSearchRequest));
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable UUID id) {
         return employeeService.findById(id)

@@ -19,18 +19,15 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.14.Final'
-    implementation('javax.xml.bind:jaxb-api:2.3.0')
-    implementation('javax.activation:activation:1.1')
-    implementation('org.glassfish.jaxb:jaxb-runtime:2.3.0')
-    implementation 'com.sun.xml.bind:jaxb-impl:2.2.11'
-    implementation 'com.sun.xml.bind:jaxb-core:2.2.11'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+
 }
 
 tasks.named('test') {

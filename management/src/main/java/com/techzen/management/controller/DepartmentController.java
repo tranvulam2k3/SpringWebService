@@ -41,14 +41,15 @@ public class DepartmentController {
     @PutMapping("/{departmentId}")
     public ResponseEntity<Department> updateDepartment(@PathVariable("departmentId") int departmentId, @RequestBody Department department) {
         departmentService.findById(departmentId).orElseThrow(() -> new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST));
-        department.setDepartmentId(departmentId);
+        department.setDepartment_id(departmentId);
         return ResponseEntity.ok(departmentService.save(department));
     }
 
     @DeleteMapping("/{departmentId}")
     public ResponseEntity<?> deleteDepartment(@PathVariable("departmentId") int departmentId) {
         departmentService.findById(departmentId).orElseThrow(() -> new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST));
-        departmentService.deleteDepartment(departmentId);
+        departmentService.delete(departmentId);
         return ResponseEntity.noContent().build();
     }
+
 }

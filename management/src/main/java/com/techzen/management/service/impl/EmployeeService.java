@@ -2,11 +2,13 @@ package com.techzen.management.service.impl;
 
 import com.techzen.management.dto.EmployeeSearchRequest;
 import com.techzen.management.model.Employee;
+import com.techzen.management.repository.EmployeeSpecification;
 import com.techzen.management.repository.IEmployeeRepository;
 import com.techzen.management.service.IEmployeeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +24,15 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public List<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest) {
-        return employeeRepository.findByAttribute(employeeSearchRequest.getName(),
-                employeeSearchRequest.getDobFrom(),
-                employeeSearchRequest.getDobTo(),
-                employeeSearchRequest.getGender() != null ? employeeSearchRequest.getGender().toString() : null,
-                employeeSearchRequest.getSalaryRange(),
-                employeeSearchRequest.getPhone(),
-                employeeSearchRequest.getDepartmentId());
+        Specification<Employee> specification = Specification.where(EmployeeSpecification.hasName(employeeSearchRequest.getName()))
+                .and(EmployeeSpecification.hasDobFrom(employeeSearchRequest.getDobFrom()))
+                .and(EmployeeSpecification.hasDobTo(employeeSearchRequest.getDobTo()))
+                .and(EmployeeSpecification.hasGender(employeeSearchRequest.getGender()))
+                .and(EmployeeSpecification.hasPhone(employeeSearchRequest.getPhone()))
+                .and(EmployeeSpecification.hasDepartmentId(employeeSearchRequest.getDepartmentId()))
+                .and(EmployeeSpecification.hasSalaryInRange(employeeSearchRequest.getSalaryRange()));
+
+        return employeeRepository.findAll(specification);
     }
 
     @Override

@@ -1,9 +1,12 @@
 package com.techzen.management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +23,8 @@ public class Department {
 
     @Column(name = "department_name")
     String department_name;
+
+    @OneToMany(mappedBy = "department_id")
+    @JsonIgnoreProperties("department_id")
+    List<Employee> employees;
 }

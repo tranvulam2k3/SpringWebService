@@ -19,13 +19,13 @@ public class EmployeeSpecification {
     public static Specification<Employee> hasDobFrom(LocalDate dobFrom) {
         return (root, query, cb) ->
                 (dobFrom == null) ? null
-                        : cb.greaterThanOrEqualTo(root.get("dob"), dobFrom);
+                        : cb.greaterThanOrEqualTo(root.get("date_of_birth"), dobFrom);
     }
 
     public static Specification<Employee> hasDobTo(LocalDate dobTo) {
         return (root, query, cb) ->
                 (dobTo == null) ? null
-                        : cb.lessThanOrEqualTo(root.get("dob"), dobTo);
+                        : cb.lessThanOrEqualTo(root.get("date_of_birth"), dobTo);
     }
 
     public static Specification<Employee> hasGender(Gender gender) {

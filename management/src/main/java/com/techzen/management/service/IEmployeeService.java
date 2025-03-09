@@ -2,14 +2,15 @@ package com.techzen.management.service;
 
 import com.techzen.management.dto.EmployeeSearchRequest;
 import com.techzen.management.model.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface IEmployeeService {
 
-    List<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest);
+    Page<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest, Pageable pageable);
 
     Optional<Employee> findById(UUID id);
 

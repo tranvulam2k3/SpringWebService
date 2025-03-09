@@ -1,6 +1,7 @@
 package com.techzen.management.controller;
 
 import com.techzen.management.dto.EmployeeSearchRequest;
+import com.techzen.management.dto.page.PageResponse;
 import com.techzen.management.exception.ApiException;
 import com.techzen.management.enums.ErrorCode;
 import com.techzen.management.model.Employee;
@@ -11,6 +12,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
@@ -23,8 +27,8 @@ public class EmployeeController {
     IEmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<?> getEmployees(EmployeeSearchRequest employeeSearchRequest) {
-        return ResponseEntity.ok(employeeService.findByAttribute(employeeSearchRequest));
+    public ResponseEntity<?> getEmployees(EmployeeSearchRequest employeeSearchRequest, Pageable pageable) {
+        return ResponseEntity.ok(new PageResponse<>(employeeService.findByAttribute(employeeSearchRequest, pageable)));
     }
 
     @GetMapping("/{id}")

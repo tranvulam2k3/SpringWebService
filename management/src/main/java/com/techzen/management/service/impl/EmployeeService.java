@@ -8,10 +8,11 @@ import com.techzen.management.service.IEmployeeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class EmployeeService implements IEmployeeService {
     IEmployeeRepository employeeRepository;
 
     @Override
-    public List<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest) {
+    public Page<Employee> findByAttribute(EmployeeSearchRequest employeeSearchRequest, Pageable pageable) {
         Specification<Employee> specification = Specification.where(EmployeeSpecification.hasName(employeeSearchRequest.getName()))
                 .and(EmployeeSpecification.hasDobFrom(employeeSearchRequest.getDobFrom()))
                 .and(EmployeeSpecification.hasDobTo(employeeSearchRequest.getDobTo()))
@@ -32,7 +33,7 @@ public class EmployeeService implements IEmployeeService {
                 .and(EmployeeSpecification.hasDepartmentId(employeeSearchRequest.getDepartmentId()))
                 .and(EmployeeSpecification.hasSalaryInRange(employeeSearchRequest.getSalaryRange()));
 
-        return employeeRepository.findAll(specification);
+        return employeeRepository.findAll(specification, pageable);
     }
 
     @Override

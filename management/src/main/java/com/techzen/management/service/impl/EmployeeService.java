@@ -1,6 +1,6 @@
 package com.techzen.management.service.impl;
 
-import com.techzen.management.dto.EmployeeSearchRequest;
+import com.techzen.management.dto.employee.EmployeeSearchRequest;
 import com.techzen.management.model.Employee;
 import com.techzen.management.repository.EmployeeSpecification;
 import com.techzen.management.repository.IEmployeeRepository;
@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
+
 import java.util.Optional;
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.techzen.management.service;
 
-import com.techzen.management.dto.EmployeeSearchRequest;
+import com.techzen.management.dto.employee.EmployeeSearchRequest;
 import com.techzen.management.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,5 +1,6 @@
-package com.techzen.management.dto;
+package com.techzen.management.dto.employee;
 
+import com.techzen.management.dto.department.DepartmentRequest;
 import com.techzen.management.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -29,4 +30,6 @@ public class EmployeeSearchRequest {
     String phone;
 
     Integer departmentId;
+
+    DepartmentRequest department;
 }

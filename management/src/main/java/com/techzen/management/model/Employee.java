@@ -43,6 +43,6 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    Department department_id;
+    Department department;
 
 }

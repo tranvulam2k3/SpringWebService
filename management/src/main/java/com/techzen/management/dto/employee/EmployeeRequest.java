@@ -32,7 +32,7 @@ public class EmployeeRequest {
 
     BigDecimal salary;
     String phone;
-    Department department_id;
+    Integer department_id;
 
 }
 

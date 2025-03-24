@@ -5,7 +5,7 @@ import com.techzen.management.dto.employee.EmployeeResponse;
 import com.techzen.management.model.Employee;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = IDepartmentMapper.class)
 public interface IEmployeeMapper {
     Employee employeeRequestToEmployee(EmployeeRequest employeeRequest);
     EmployeeResponse employeeToEmployeeResponse(Employee employee);

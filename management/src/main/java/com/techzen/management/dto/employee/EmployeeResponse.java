@@ -1,6 +1,7 @@
 package com.techzen.management.dto.employee;
 
 import com.techzen.management.dto.department.DepartmentRequest;
+import com.techzen.management.dto.department.DepartmentResponse;
 import com.techzen.management.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,7 @@ public class EmployeeResponse {
     BigDecimal salary;
     String phone;
 
-    DepartmentRequest department;
+//    DepartmentRequest department;
+    DepartmentResponse department;
 
 }

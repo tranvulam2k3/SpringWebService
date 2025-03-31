@@ -14,6 +14,6 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
     Long id;
-    String password;
+    String username;
     Set<RoleRequest> roles = new HashSet<>();
 }

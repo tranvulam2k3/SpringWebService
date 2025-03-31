@@ -3,6 +3,7 @@ package com.techzen.management.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,6 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration // Đánh dấu lớp này là một lớp cấu hình Spring
 @EnableWebSecurity // Kích hoạt cấu hình Security
+@EnableGlobalMethodSecurity
 public class SecurityConfig {
 
     @Value("${jwt.signerKey}")
@@ -30,8 +32,10 @@ public class SecurityConfig {
             request
                     // Cho phép truy cập không hạn chế đối với endpoint "/student"
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/employees/**").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers("/departments/**").hasRole("ADMIN")
+//                    .requestMatchers("/employees/**").hasAnyRole("USER", "ADMIN")
+//                    .requestMatchers("/departments/**").hasRole("ADMIN")
+//                    .requestMatchers("/users/**").hasRole("ADMIN")
+
                     .anyRequest().authenticated(); // nhưng request còn lại phải được xác thực
         });
 

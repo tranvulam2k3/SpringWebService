@@ -50,7 +50,6 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
-
         Employee employee = employeeMapper.employeeRequestToEmployee(employeeRequest);
         Integer deptId = employeeRequest.getDepartment_id();
         Department department = departmentService.findById(deptId)
@@ -58,7 +57,6 @@ public class EmployeeController {
         employee.setDepartment(department);
         employeeService.save(employee);
         EmployeeResponse employeeResponse = employeeMapper.employeeToEmployeeResponse(employee);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponse);
     }
 

@@ -1,6 +1,5 @@
 package com.techzen.management.controller;
 
-import com.techzen.management.dto.ApiResponse;
 import com.techzen.management.dto.employee.EmployeeRequest;
 import com.techzen.management.dto.employee.EmployeeResponse;
 import com.techzen.management.dto.employee.EmployeeSearchRequest;
@@ -18,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
@@ -29,7 +26,8 @@ import java.util.*;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/employees")
+@RequestMapping("${api.prefix}/employees")
+@CrossOrigin(origins = "http://localhost:5173")
 public class EmployeeController {
 
     IEmployeeService employeeService;

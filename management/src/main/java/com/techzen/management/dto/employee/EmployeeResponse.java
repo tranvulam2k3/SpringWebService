@@ -1,6 +1,5 @@
 package com.techzen.management.dto.employee;
 
-import com.techzen.management.dto.department.DepartmentRequest;
 import com.techzen.management.dto.department.DepartmentResponse;
 import com.techzen.management.enums.Gender;
 import jakarta.persistence.*;

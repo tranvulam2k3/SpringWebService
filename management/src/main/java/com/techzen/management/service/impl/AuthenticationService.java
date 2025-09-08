@@ -10,9 +10,12 @@ import com.techzen.management.dto.auth.AuthenticationRequest;
 import com.techzen.management.dto.auth.AuthenticationResponse;
 import com.techzen.management.dto.auth.IntrospectRequest;
 import com.techzen.management.dto.auth.IntrospectResponse;
+import com.techzen.management.dto.logout.LogoutRequest;
 import com.techzen.management.enums.ErrorCode;
 import com.techzen.management.exception.ApiException;
+import com.techzen.management.model.InvalidToken;
 import com.techzen.management.model.User;
+import com.techzen.management.repository.IInvalidTokenRepository;
 import com.techzen.management.service.IAuthenticationService;
 import com.techzen.management.repository.IUserRepository;
 
@@ -23,15 +26,16 @@ import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
-
-import static org.apache.catalina.realm.UserDatabaseRealm.getRoles;
+import java.util.UUID;
 
 
 @Service
@@ -39,6 +43,7 @@ import static org.apache.catalina.realm.UserDatabaseRealm.getRoles;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService implements IAuthenticationService {
     IUserRepository userRepository;
+    IInvalidTokenRepository invalidTokenRepository;
 
     @Value("${jwt.signerKey}")
     @NonFinal
@@ -58,10 +63,26 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     @Override
-    public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
-        return IntrospectResponse.builder()
-                .isValid(verifyJWT(introspectRequest.getToken()))
-                .build();
+    public IntrospectResponse introspect(IntrospectRequest introspectRequest)  {
+        try {
+            verifyToken(introspectRequest.getToken());
+            return IntrospectResponse.builder()
+                    .isValid(true)
+                    .build();
+        } catch (JwtException e) {
+            return IntrospectResponse.builder()
+                    .isValid(false)
+                    .build();
+        }
+    }
+
+    @Override
+    public void logout(LogoutRequest logoutRequest) throws ParseException {
+        SignedJWT signedJWT = verifyToken(logoutRequest.getToken());
+        invalidTokenRepository.save(InvalidToken.builder()
+                .id(signedJWT.getJWTClaimsSet().getJWTID())
+                .expiryTime(LocalDateTime.now())
+                .build());
     }
 
 
@@ -77,6 +98,7 @@ public class AuthenticationService implements IAuthenticationService {
                 ))
                 // Thêm một custom claim (thông tin tùy chỉnh) vào JWT, chứa thông tin về đối tượng Student
                 .claim("scope", getRoles(user))
+                .jwtID(UUID.randomUUID().toString())
                 .build(); // Xây dựng đối tượng JWTClaimsSet
 
         // Tạo payload từ claims đã tạo, chuyển đối tượng claims thành định dạng JSON
@@ -110,5 +132,36 @@ public class AuthenticationService implements IAuthenticationService {
         Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
         var verified = signedJWT.verify(verifier);
         return verified && expiry.after(new Date());
+    }
+
+    private SignedJWT verifyToken(String token) {
+        // Tạo một đối tượng JWSVerifier với thuật toán HMAC SHA-512 để xác minh chữ ký của JWT
+        try {
+            // Tạo một đối tượng JWSVerifier với thuật toán HMAC SHA-512 để xác minh chữ ký của JWT
+            JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+            // Phân tích cú pháp (parse) chuỗi JWT thành đối tượng SignedJWT
+            SignedJWT signedJWT = SignedJWT.parse(token);
+
+            // Lấy thời gian hết hạn của JWT từ phần claims (payload)
+            Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+            var verified = signedJWT.verify(verifier);
+
+            // Xác minh chữ ký của JWT, kiểm tra xem chữ ký có hợp lệ không
+            if (!verified && expiryTime.after(new Date())) {
+                throw new JwtException("Invalid token");
+            }
+
+            String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
+
+            if (invalidTokenRepository.findById(jwtId).isPresent()) {
+                throw new JwtException("Invalid token");
+            }
+
+            return signedJWT;
+        } catch (JOSEException | ParseException e) {
+            e.printStackTrace();
+            throw new JwtException("Invalid token");
+        }
     }
 }

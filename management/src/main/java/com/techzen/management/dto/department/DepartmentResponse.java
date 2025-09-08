@@ -1,13 +1,7 @@
 package com.techzen.management.dto.department;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.techzen.management.dto.employee.EmployeeResponse;
-import jakarta.persistence.*;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @Getter
 @Setter

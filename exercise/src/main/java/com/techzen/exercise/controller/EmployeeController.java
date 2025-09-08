@@ -19,11 +19,11 @@ public class EmployeeController {
 
     private final List<Employee> employees = new ArrayList<>(
             Arrays.asList(
-                    new Employee(UUID.randomUUID(), "Lâm", LocalDate.of(1999, 9, 12), Gender.MALE, BigDecimal.valueOf(15000000), "0908333333"),
-                    new Employee(UUID.randomUUID(), "Trường", LocalDate.of(2000, 11, 13), Gender.MALE, BigDecimal.valueOf(13000000), "0908333222"),
-                    new Employee(UUID.randomUUID(), "Uyên", LocalDate.of(1992, 3, 15), Gender.FEMALE, BigDecimal.valueOf(15000000), "0908333111"),
-                    new Employee(UUID.randomUUID(), "Luyện", LocalDate.of(1993, 2, 16), Gender.FEMALE, BigDecimal.valueOf(15000000), "0908333231"),
-                    new Employee(UUID.randomUUID(), "Nguyên", LocalDate.of(1996, 6, 17), Gender.MALE, BigDecimal.valueOf(15000000), "0908333312")
+                    new Employee(UUID.randomUUID(), "Văn A", LocalDate.of(1999, 9, 12), Gender.MALE, BigDecimal.valueOf(15000000), "0908333333"),
+                    new Employee(UUID.randomUUID(), "Văn B", LocalDate.of(2000, 11, 13), Gender.MALE, BigDecimal.valueOf(13000000), "0908333222"),
+                    new Employee(UUID.randomUUID(), "Văn c", LocalDate.of(1992, 3, 15), Gender.FEMALE, BigDecimal.valueOf(15000000), "0908333111"),
+                    new Employee(UUID.randomUUID(), "Văn D", LocalDate.of(1993, 2, 16), Gender.FEMALE, BigDecimal.valueOf(15000000), "0908333231"),
+                    new Employee(UUID.randomUUID(), "Văn E", LocalDate.of(1996, 6, 17), Gender.MALE, BigDecimal.valueOf(15000000), "0908333312")
             ));
 
     @GetMapping

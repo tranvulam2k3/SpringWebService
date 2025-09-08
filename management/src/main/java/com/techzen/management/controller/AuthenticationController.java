@@ -5,6 +5,7 @@ import com.techzen.management.dto.auth.AuthenticationRequest;
 import com.techzen.management.dto.auth.AuthenticationResponse;
 import com.techzen.management.dto.auth.IntrospectRequest;
 import com.techzen.management.dto.auth.IntrospectResponse;
+import com.techzen.management.dto.logout.LogoutRequest;
 import com.techzen.management.service.IAuthenticationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.text.ParseException;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/auth")
+@RequestMapping("${api.prefix}/auth")
 public class AuthenticationController {
 
     IAuthenticationService authenticationService;
@@ -32,5 +33,10 @@ public class AuthenticationController {
     @PostMapping("/introspect")
     public IntrospectResponse introspect(@RequestBody IntrospectRequest introspectRequest) throws ParseException, JOSEException {
         return authenticationService.introspect(introspectRequest);
+    }
+
+    @PostMapping("/logout")
+    public void logout(@RequestBody LogoutRequest logoutRequest) throws ParseException {
+        authenticationService.logout(logoutRequest);
     }
 }
